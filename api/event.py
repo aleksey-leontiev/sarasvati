@@ -2,7 +2,7 @@
 class Event:
     def __init__(self):
         """
-        Initializes new instance of the event
+        Initializes new instance of the Event class
         """
         self.handlers = []
 
@@ -12,6 +12,13 @@ class Event:
         :param handler:
         """
         self.handlers.append(handler)
+
+    def unsubscribe(self, handler):
+        """
+        Unsubscribe from the event
+        :param handler:
+        """
+        self.handlers.remove(handler)
 
     def notify(self, args):
         """

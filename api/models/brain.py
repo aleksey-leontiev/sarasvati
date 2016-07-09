@@ -1,5 +1,5 @@
-from api.event import Event
-from api.models.interfaces.thoughtsstorage import ThoughtsStorage
+from ..event import Event
+from .interfaces import ThoughtsStorage
 from .thought import Thought
 
 
@@ -25,7 +25,7 @@ class Brain:
         return self.storage.get_thought(tid)
 
     def add_thought(self, thought: Thought):
-        # TODO: looks like useless (no references found
+        # TODO: looks like useless (no references found)
         """
         Adds thought to the brain
         :param thought: Thought to be added
@@ -73,3 +73,16 @@ class Brain:
         if kind == "parent->child":
             source.add_link(destination.get_id(), "child")
             destination.add_link(source.get_id(), "parent")
+        else:
+            raise ValueError("Wrong link kind")
+
+    @staticmethod
+    def get_link_type(source: Thought, destination: Thought):
+        for link in source.get_links():
+            if link["id"] == destination.get_id():
+                return link["kind"]
+        return None
+
+    @staticmethod
+    def is_linked(source: Thought, destination: Thought):
+        return Brain.get_link_type(source, destination) is not None
