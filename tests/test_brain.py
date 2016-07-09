@@ -1,6 +1,6 @@
 import unittest
 
-from api.models import Thought, Brain
+from api.models import Thought, Brain, Link
 # noinspection PyUnresolvedReferences
 from assets import MemoryThoughtsStorage
 
@@ -53,3 +53,33 @@ class ThoughtMethods(unittest.TestCase):
         t2 = Thought()
         with self.assertRaises(ValueError):
             self.brain.link_thoughts(t1, t2, "WRONG_KIND")
+
+    def test_get_links(self):
+        t1 = self.brain.create_thought("root")
+        t2 = self.brain.create_linked_thought(t1, "parent->child", "child_1")
+        t3 = self.brain.create_linked_thought(t1, "parent->child", "child_2")
+        t4 = self.brain.create_linked_thought(t2, "parent->child", "child_3")
+
+        self.assertEqual(self.brain.get_links(t2), [
+            Link(t2, t1, "parent"),
+            Link(t2, t4, "child"),
+        ])
+
+    def test_eq(self):
+        t1 = Thought()
+        t2 = Thought()
+
+        l1 = Link(t1, t2, "child")
+        l2 = Link(t1, t2, "child")
+
+        self.assertEqual(l1, l1)
+        self.assertEqual(l1, l2)
+
+    def test_not_eq(self):
+        t1 = Thought()
+        t2 = Thought()
+
+        l1 = Link(t1, t2, "child")
+        l2 = Link(t2, t1, "child")
+
+        self.assertNotEqual(l1, l2)

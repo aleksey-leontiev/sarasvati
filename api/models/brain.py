@@ -1,6 +1,7 @@
 from ..event import Event
 from .interfaces import ThoughtsStorage
 from .thought import Thought
+from .link import Link
 
 
 class Brain:
@@ -23,6 +24,20 @@ class Brain:
         :return: Thought
         """
         return self.storage.get_thought(tid)
+
+    def get_links(self, thought: Thought):
+        """
+        Returns links of specified thought
+        :param thought: Thought to get links from
+        :return: Array of Link
+        """
+        result = []
+        for link in thought.get_links():
+            destination = self.get_thought(link["id"])
+            kind = link["kind"]
+            link = Link(thought, destination, kind)
+            result.append(link)
+        return result
 
     def add_thought(self, thought: Thought):
         # TODO: looks like useless (no references found)

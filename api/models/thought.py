@@ -61,6 +61,9 @@ class Thought(Model):
             if link["id"] == thought_id:
                 self.dictionary["links"].remove(link)
 
+    def __eq__(self, other):
+        return self.get_id() == other.get_id()
+
     def __repr__(self):
         """
         Returns string representation of instance

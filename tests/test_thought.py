@@ -37,3 +37,18 @@ class ThoughtMethods(unittest.TestCase):
         t1.add_link(t2.get_id(), "child")
         t1.add_link(t2.get_id(), "child")
         self.assertEqual(t1.get_links(), [{"id": t2.get_id(), "kind": "child"}])
+
+    def test_eq(self):
+        t1 = Thought()
+        t2 = Thought()
+
+        t2.set_field("id", t1.get_id())
+
+        self.assertEqual(t1, t1)
+        self.assertEqual(t1, t2)
+
+    def test_not_eq(self):
+        t1 = Thought()
+        t2 = Thought()
+
+        self.assertNotEqual(t1, t2)
