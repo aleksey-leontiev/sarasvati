@@ -27,6 +27,7 @@ class PlexController:
         r = api.brain.create_thought("root")
         c1 = api.brain.create_linked_thought(r, "parent->child", "child")
         c2 = api.brain.create_linked_thought(c1, "parent->child", "child2")
+        c3 = api.brain.create_linked_thought(r, "parent->child", "child1")
         api.events.thoughtSelected.notify(r)
 
     def activate(self, thought):

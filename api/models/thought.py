@@ -41,6 +41,13 @@ class Thought(Model):
         """
         return self.get_field("links")
 
+    def get_links_by_kind(self, kind):
+        """
+        Returns links
+        :return: List of links
+        """
+        return [link for link in self.get_links() if link["kind"] == kind]
+
     def add_link(self, thought_id, kind):
         # TODO: do not add link twice
         """

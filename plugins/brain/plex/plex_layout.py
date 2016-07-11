@@ -16,16 +16,35 @@ class PlexLayout:
         diffs = self.differ.diff(self.old_state, new_state)
         for diff in diffs:
             if diff.old_state is None:
+                kind = "parent"
+                if diff.new_state == "parent":
+                    kind = "child"
+
+                parent_thought = self.get_linked(diff.thought, kind)
                 pos = self.get_pos(diff.new_state)
                 result.append(PlexLayoutAction(diff.thought, "add"))
+                if parent_thought:
+                    result.append(PlexLayoutAction(diff.thought, "set_pos_to", parent_thought))
                 result.append(PlexLayoutAction(diff.thought, "move_to", pos))
             elif diff.new_state is None:
+                parent_thought = self.get_linked(diff.thought, "parent")
+                if parent_thought:
+                    result.append(PlexLayoutAction(diff.thought, "move_to", parent_thought))
                 result.append(PlexLayoutAction(diff.thought, "remove"))
             else:
                 pos = self.get_pos(diff.new_state)
                 result.append(PlexLayoutAction(diff.thought, "move_to", pos))
         self.old_state = new_state
         return result
+
+    def get_linked(self, thought, kind):
+        parents = thought.get_links_by_kind(kind)
+        for parent in parents:
+            id = parent["id"]
+            state = self.old_state.get_state_by_thought_id(id)
+            if state is not None:
+                return state.thought
+        return None
 
     def get_pos(self, state):
         if state == "root":
