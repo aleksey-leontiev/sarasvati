@@ -11,7 +11,7 @@ class PlexStateDiffMethods(unittest.TestCase):
         self.storage = MemoryThoughtsStorage()
         self.brain = Brain(self.storage)
         self.plex = Plex(self.brain)
-        self.diff = PlexStateDiff()
+        self.differ = PlexStateDiff()
 
         # root -> first_child -> child_of_child
         # root -> second_child
@@ -20,16 +20,10 @@ class PlexStateDiffMethods(unittest.TestCase):
         self.second_child = self.brain.create_linked_thought(self.root_thought, "parent->child", "2child")
         self.child_of_child = self.brain.create_linked_thought(self.first_child, "parent->child", "child_of_child")
 
-        # required for right ordering. expected array should go in same order
-        self.root_thought.set_field("id", "1")
-        self.first_child.set_field("id", "2")
-        self.second_child.set_field("id", "3")
-        self.child_of_child.set_field("id", "4")
-
     def test_activate_same_no_diff(self):
         state1 = self.plex.activate(self.root_thought)
         state2 = self.plex.activate(self.root_thought)
-        self.assertEqual(self.diff.diff(state1, state2), [])
+        self.assertEqual(self.differ.diff(state1, state2), [])
 
     def test_activate_root_and_child(self):
         state1 = self.plex.activate(self.root_thought)
@@ -40,7 +34,10 @@ class PlexStateDiffMethods(unittest.TestCase):
             PlexStateDiffLine(self.second_child, "child", None),
             PlexStateDiffLine(self.child_of_child, None, "child"),
         ]
-        diff = self.diff.diff(state1, state2)
+        diff = self.differ.diff(state1, state2)
+
+        self.__sort_by_id(diff)
+        self.__sort_by_id(expected)
         self.assertEqual(diff, expected)
 
     def test_activate_root_and_second_child(self):
@@ -51,7 +48,10 @@ class PlexStateDiffMethods(unittest.TestCase):
             PlexStateDiffLine(self.first_child, "child", None),
             PlexStateDiffLine(self.second_child, "child", "root")
         ]
-        diff = self.diff.diff(state1, state2)
+        diff = self.differ.diff(state1, state2)
+
+        self.__sort_by_id(diff)
+        self.__sort_by_id(expected)
         self.assertEqual(diff, expected)
 
     def test_activate_child_of_child_and_first_child(self):
@@ -62,5 +62,12 @@ class PlexStateDiffMethods(unittest.TestCase):
             PlexStateDiffLine(self.first_child, "parent", "root"),
             PlexStateDiffLine(self.child_of_child, "root", "child")
         ]
-        diff = self.diff.diff(state1, state2)
+        diff = self.differ.diff(state1, state2)
+
+        self.__sort_by_id(diff)
+        self.__sort_by_id(expected)
         self.assertEqual(diff, expected)
+
+    @staticmethod
+    def __sort_by_id(array):
+        array.sort(key=lambda t: t.thought.get_id())

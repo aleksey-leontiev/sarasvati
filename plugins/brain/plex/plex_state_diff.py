@@ -27,7 +27,6 @@ class PlexStateDiff:
             elif o.state != n.state:
                 result.append(PlexStateDiffLine(t, o.state, n.state))
 
-        result.sort(key=lambda tx: tx.thought.get_id())  # TODO: remove and put to the tests
         return result
 
     @staticmethod
