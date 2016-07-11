@@ -4,11 +4,11 @@ from PyQt5.QtWidgets import QGraphicsWidget
 from api.app import App
 
 
-class Node(QGraphicsWidget):
+class PlexNode(QGraphicsWidget):
     maxBounding = QRectF(0, 0, 150, 150)
 
     def __init__(self, thought):
-        super(Node, self).__init__()
+        super(PlexNode, self).__init__()
         self.thought = thought
         self.boundingRect = QRectF(0, 0, 0, 0)
 

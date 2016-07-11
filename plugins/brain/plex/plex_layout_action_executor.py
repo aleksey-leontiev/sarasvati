@@ -1,8 +1,6 @@
 from PyQt5.QtCore import QPointF
 
-from api.models import Thought
-from ..models import PlexLayoutAction
-from ..widgets import Node
+from .plex_node import PlexNode
 
 
 class PlexLayoutActionExecutor:
@@ -20,7 +18,7 @@ class PlexLayoutActionExecutor:
                 self.remove_thought(action.thought)
 
     def add_thought(self, thought):
-        node = Node(thought)
+        node = PlexNode(thought)
         self.scene.addItem(node)
 
     def remove_thought(self, thought):
@@ -32,7 +30,7 @@ class PlexLayoutActionExecutor:
         node = self.get_node(thought)
         pass
 
-    def get_node(self, thought) -> Node:
+    def get_node(self, thought) -> PlexNode:
         for item in self.scene.items():
             if item.thought.get_id() == thought.get_id():
                 return item

@@ -1,7 +1,7 @@
 import unittest
 
 from api.models import Brain
-from plugins.brain.models import Plex
+from plugins.brain.plex import Plex
 # noinspection PyUnresolvedReferences
 from assets import MemoryThoughtsStorage
 

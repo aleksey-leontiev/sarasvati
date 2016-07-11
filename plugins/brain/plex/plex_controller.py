@@ -1,9 +1,12 @@
 from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView
 
+from .plex_layout_action_executor import PlexLayoutActionExecutor
+from .plex import Plex
+from .plex_state_diff import PlexStateDiff
+from .plex_layout import PlexLayout
+
 from api.app import App
-from ..controllers.plex_layout_action_executor import PlexLayoutActionExecutor  # TODO ..controllers.plex_layout_action_executor ??
-from ..models import Plex, PlexStateDiff, PlexLayout
 
 
 class PlexController:
@@ -19,12 +22,6 @@ class PlexController:
 
         self.__set_up_view_widget()
         self.actions_executor = PlexLayoutActionExecutor(self.scene)
-
-        self.r = brain.create_thought("root")
-        self.c = brain.create_linked_thought(self.r, "parent->child", "child")
-        self.c2 = brain.create_linked_thought(self.r, "parent->child", "child2")
-        self.c3 = brain.create_linked_thought(self.c, "parent->child", "child3")
-        self.activate(self.r)
 
     def on_thought_selected(self, thought):
         self.activate(thought)

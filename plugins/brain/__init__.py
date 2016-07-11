@@ -1,2 +1,2 @@
-from .plugin import BrainSectionPlugin
+from .brain_section_plugin import BrainSectionPlugin
 

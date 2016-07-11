@@ -1,7 +1,6 @@
-from .plex_state import PlexState
+from api.models import Brain, Thought
 
-from api.models.brain import Brain
-from api.models.thought import Thought
+from .plex_state import PlexState
 
 
 class Plex:
@@ -24,7 +23,7 @@ class Plex:
         state = PlexState()
         state.add(thought, "root")
 
-        for link in thought.get_links():
+        for link in thought.get_links():  # TODO: uses low-lever api (exam[le: link["id"]) change to brain.get_links()
             loading_thought_id = link["id"]
             link_kind = link["kind"]
             loaded_thought = self.brain.get_thought(loading_thought_id)

@@ -4,7 +4,8 @@ from PyQt5.uic import loadUi
 
 from api.models import MemoryThoughtsStorage, Brain
 from api.plugins import SectionPlugin
-from .controllers import PlexController
+
+from .plex import PlexController
 
 
 class BrainSectionPlugin(SectionPlugin):
