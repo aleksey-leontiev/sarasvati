@@ -15,18 +15,16 @@ class PlexStateDiff:
         ids = PlexStateDiff.get_ids(new, old)
 
         for tid in ids:
-            o = old.get_state_by_thought_id(tid)
-            n = new.get_state_by_thought_id(tid)
-            t = PlexStateDiff.get_thought_from_states(o, n, tid)
+            old_state = old.get_state_by_thought_id(tid)
+            new_state = new.get_state_by_thought_id(tid)
+            thought = (old_state if old_state is not None else new_state).thought
 
-            if o is None or n is None:
-                if o is None:
-                    result.append(PlexStateDiffLine(t, None, n.state))
-                else:
-                    result.append(PlexStateDiffLine(t, o.state, None))
-            elif o.state != n.state:
-                result.append(PlexStateDiffLine(t, o.state, n.state))
-
+            if old_state is None or new_state is None:  # add or remove thought
+                old_state_name = old_state.state if old_state is not None else None
+                new_state_name = new_state.state if new_state is not None else None
+                result.append(PlexStateDiffLine(thought, old_state_name, new_state_name))
+            elif old_state.state != new_state.state:  # change thought state
+                result.append(PlexStateDiffLine(thought, old_state.state, new_state.state))
         return result
 
     @staticmethod
@@ -40,10 +38,3 @@ class PlexStateDiff:
                 ids.append(state.thought.get_id())
         return ids
 
-    @staticmethod
-    def get_thought_from_states(old, new, tid):  # TODO tid?
-        if old is not None:
-            return old.thought
-        if new is not None:
-            return new.thought
-        return None
