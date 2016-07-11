@@ -49,15 +49,16 @@ class Thought(Model):
         return [link for link in self.get_links() if link["kind"] == kind]
 
     def add_link(self, thought_id, kind):
-        # TODO: do not add link twice
         """
-        Adds link
+        Adds link. If link with same id exist ValueError will raise
         :param thought_id: Thought id to link to
         :param kind: Kind of link
         """
-        self.dictionary["links"].append({
-            "id": thought_id, "kind": kind
-        })
+        link = {"id": thought_id, "kind": kind}
+        links = self.dictionary["links"]
+        if link in links:
+            raise ValueError("Link with same id already exist")
+        links.append(link)
 
     def remove_link(self, thought_id):
         """

@@ -93,6 +93,12 @@ class Brain:
 
     @staticmethod
     def get_link_type(source: Thought, destination: Thought):
+        """
+        Returns link type
+        :param source: Source thought
+        :param destination: Destination thought
+        :return: Kind of link
+        """
         for link in source.get_links():
             if link["id"] == destination.get_id():
                 return link["kind"]
@@ -100,4 +106,10 @@ class Brain:
 
     @staticmethod
     def is_linked(source: Thought, destination: Thought):
+        """
+        Are thoughts linked?
+        :param source: Source thought
+        :param destination: Destination thought
+        :return: True if thoughts connected, otherwise False
+        """
         return Brain.get_link_type(source, destination) is not None
