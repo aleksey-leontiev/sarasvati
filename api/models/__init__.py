@@ -1,4 +1,4 @@
-from .brain import *
+from .brain import Brain
+from .link import Link
+from .thought import Thought
 from .interfaces import *
-from .thought import *
-from .memory_thoughts_storage import *

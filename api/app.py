@@ -7,6 +7,7 @@ from .plugins import SectionPlugin
 class App:
     pluginManager = None
     thoughtSelected = None
+    brain = None
 
     def __init__(self):
         App.pluginManager = self.__set_up_plugins_manager()
