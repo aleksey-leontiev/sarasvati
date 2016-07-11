@@ -10,7 +10,7 @@ class ThoughtMethods(unittest.TestCase):
         self.storage = MemoryThoughtsStorage()
         self.brain = Brain(self.storage)
 
-    def add_thought(self):
+    def test_add_thought(self):
         t = Thought()
         self.brain.add_thought(t)
         self.assertIsNotNone(self.brain.get_thought(t.get_id()))
