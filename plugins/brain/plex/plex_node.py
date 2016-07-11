@@ -11,6 +11,7 @@ class PlexNode(QGraphicsWidget):
         super(PlexNode, self).__init__()
         self.thought = thought
         self.boundingRect = QRectF(0, 0, 0, 0)
+        self.animations = []
 
     # noinspection PyMethodOverriding
     def paint(self, painter, option, widget):

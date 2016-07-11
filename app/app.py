@@ -39,7 +39,8 @@ class App:
         widget.show()
         sys.exit(qtapp.exec_())
 
-    def __set_up_plugins_manager(self):
+    @staticmethod
+    def __set_up_plugins_manager():
         plugin_manager = PluginManager()
         plugin_manager.setPluginPlaces(["plugins"])
         plugin_manager.setCategoriesFilter({

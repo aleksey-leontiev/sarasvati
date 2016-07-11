@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView
+from PyQt5.QtWidgets import QGraphicsView
 
 from api import api
 
@@ -7,6 +7,7 @@ from .plex import Plex
 from .plex_layout import PlexLayout
 from .plex_layout_action_executor import PlexLayoutActionExecutor
 from .plex_state_diff import PlexStateDiff
+from .plex_scene import PlexScene
 
 
 class PlexController:
@@ -25,6 +26,7 @@ class PlexController:
 
         r = api.brain.create_thought("root")
         c1 = api.brain.create_linked_thought(r, "parent->child", "child")
+        c2 = api.brain.create_linked_thought(c1, "parent->child", "child2")
         api.events.thoughtSelected.notify(r)
 
     def activate(self, thought):
@@ -33,7 +35,7 @@ class PlexController:
         self.actions_executor.run(actions)
 
     def __set_up_view_widget(self):
-        self.scene = QGraphicsScene()
+        self.scene = PlexScene()
         self.view.setScene(self.scene)
         self.view.setRenderHint(QPainter.Antialiasing)
         self.view.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
