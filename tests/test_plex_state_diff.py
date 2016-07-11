@@ -1,6 +1,7 @@
 import unittest
 
-from api.models import Plex, Brain, PlexStateDiff
+from api.models import Brain
+from plugins.brain.models import Plex, PlexStateDiff, PlexStateDiffLine
 # noinspection PyUnresolvedReferences
 from assets import MemoryThoughtsStorage
 
@@ -34,10 +35,10 @@ class PlexStateDiffMethods(unittest.TestCase):
         state1 = self.plex.activate(self.root_thought)
         state2 = self.plex.activate(self.first_child)
         expected = [
-            [self.root_thought, "root", "parent"],
-            [self.first_child, "child", "root"],
-            [self.second_child, "child", None],
-            [self.child_of_child, None, "child"],
+            PlexStateDiffLine(self.root_thought, "root", "parent"),
+            PlexStateDiffLine(self.first_child, "child", "root"),
+            PlexStateDiffLine(self.second_child, "child", None),
+            PlexStateDiffLine(self.child_of_child, None, "child"),
         ]
         diff = self.diff.diff(state1, state2)
         self.assertEqual(diff, expected)
@@ -46,9 +47,9 @@ class PlexStateDiffMethods(unittest.TestCase):
         state1 = self.plex.activate(self.root_thought)
         state2 = self.plex.activate(self.second_child)
         expected = [
-            [self.root_thought, "root", "parent"],
-            [self.first_child, "child", None],
-            [self.second_child, "child", "root"]
+            PlexStateDiffLine(self.root_thought, "root", "parent"),
+            PlexStateDiffLine(self.first_child, "child", None),
+            PlexStateDiffLine(self.second_child, "child", "root")
         ]
         diff = self.diff.diff(state1, state2)
         self.assertEqual(diff, expected)
@@ -57,9 +58,9 @@ class PlexStateDiffMethods(unittest.TestCase):
         state1 = self.plex.activate(self.child_of_child)
         state2 = self.plex.activate(self.first_child)
         expected = [
-            [self.root_thought, None, "parent"],
-            [self.first_child, "parent", "root"],
-            [self.child_of_child, "root", "child"]
+            PlexStateDiffLine(self.root_thought, None, "parent"),
+            PlexStateDiffLine(self.first_child, "parent", "root"),
+            PlexStateDiffLine(self.child_of_child, "root", "child")
         ]
         diff = self.diff.diff(state1, state2)
         self.assertEqual(diff, expected)

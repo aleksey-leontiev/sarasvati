@@ -1,47 +1,22 @@
-from tinydb import TinyDB, Query
+from api import App
 
-from api.models import Thought, Plex
-from api.models.plex.plex_state_diff import PlexStateDiff
-from api.models.interfaces.thoughtsstorage import ThoughtsStorage
+import sys
+
+from PyQt5.QtWidgets import QApplication
+from PyQt5.uic import loadUi
 
 
-class TinyStorage(ThoughtsStorage):
-    def __init__(self):
-        self.db = TinyDB("db.json")
+app = QApplication(sys.argv)
+widget = loadUi('main.ui')
 
-    def get_thought(self, id):
-        query = Query()
-        result = self.db.search(query.id == id)
-        if len(result) > 0:
-            return Thought(result[0])
-        return None
 
-s = TinyStorage()
-p = Plex(s)
-d = PlexStateDiff()
 
-lo = p.activate(s.get_thought(2))
-ln = p.activate(s.get_thought(4))
+for pluginInfo in App.pluginManager.getPluginsOfCategory("section"):
+    po = pluginInfo.plugin_object
+    po.activate()
+    widget.tabWidget.addTab(po.get_widget(), po.get_section_name())
+    # pluginManager.activatePluginByName(pluginInfo.name)
 
-d.diff(lo, ln)
+widget.show()
 
-print(lo.get_state())
-#t1 = Thought({"id":1,"title":"first", "links":[]})
-#t2 = Thought({"id":2,"title":"second", "links":[]})
-#t3 = Thought({"id":3,"title":"third", "links":[]})
-#t4 = Thought({"id":4,"title":"fourth", "links":[]})
-
-#p.link_thoughts(t1, t2, "parent->child")
-#p.link_thoughts(t1, t4, "parent->child")
-#p.link_thoughts(t2, t3, "parent->child")
-
-#1->2->3
-#1->4
-#
-
-#p.link_thoughts(t1)
-
-#db.insert(t1.to_dictionary())
-#db.insert(t2.to_dictionary())
-#db.insert(t3.to_dictionary())
-#db.insert(t4.to_dictionary())
+sys.exit(app.exec_())

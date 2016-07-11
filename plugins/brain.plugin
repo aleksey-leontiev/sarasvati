@@ -1,0 +1,8 @@
+[Core]
+Name = Brain Section
+Module = brain
+
+[Documentation]
+Author = Aleksey Leontiev
+Version = 0.1
+Description = Adds "Brain" section to the main window

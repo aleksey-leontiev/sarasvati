@@ -1,7 +1,7 @@
 from .plex_state import PlexState
 
-from ..brain import Brain
-from ..thought import Thought
+from api.models.brain import Brain
+from api.models.thought import Thought
 
 
 class Plex:

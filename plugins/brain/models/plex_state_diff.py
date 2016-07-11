@@ -1,6 +1,18 @@
 from .plex_state import PlexState
 
 
+class PlexStateDiffLine:
+    def __init__(self, thought, old_state, new_state):
+        self.thought = thought
+        self.old_state = old_state
+        self.new_state = new_state
+
+    def __eq__(self, other):
+        return self.thought == other.thought and \
+            self.old_state == other.old_state and \
+            self.new_state == other.new_state
+
+
 class PlexStateDiff:
     @staticmethod
     def diff(old: PlexState, new: PlexState):
@@ -20,14 +32,13 @@ class PlexStateDiff:
 
             if o is None or n is None:
                 if o is None:
-                    result.append([t, None, n.state])
+                    result.append(PlexStateDiffLine(t, None, n.state))
                 else:
-                    result.append([t, o.state, None])
+                    result.append(PlexStateDiffLine(t, o.state, None))
             elif o.state != n.state:
-                result.append([t, o.state, n.state])
+                result.append(PlexStateDiffLine(t, o.state, n.state))
 
-        result.sort(key=lambda t: t[0].get_id())
-        print(result)
+        result.sort(key=lambda t: t.thought.get_id()) # TODO: remove and put to the tests
         return result
 
     @staticmethod
