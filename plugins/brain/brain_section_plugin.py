@@ -2,9 +2,8 @@ import os
 
 from PyQt5.uic import loadUi
 
-from api.app import App
+from api import api
 from api.plugins import SectionPlugin
-
 from .plex import PlexController
 
 
@@ -14,12 +13,11 @@ class BrainSectionPlugin(SectionPlugin):
         self.widget = None
         self.path = os.path.dirname(os.path.abspath(__file__))
         self.plex_controller = None
-        self.brain = App.brain
 
     def activate(self):
         path = os.path.join(self.path, 'section.ui')
         self.widget = loadUi(path)
-        self.plex_controller = PlexController(self.brain, self.widget.graphicsView)
+        self.plex_controller = PlexController(api.brain, self.widget.graphicsView)
 
     def get_widget(self):
         return self.widget

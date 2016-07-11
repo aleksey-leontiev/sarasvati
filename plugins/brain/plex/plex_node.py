@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QRectF, Qt
 from PyQt5.QtWidgets import QGraphicsWidget
 
-from api.app import App
+from api import api
 
 
 class PlexNode(QGraphicsWidget):
@@ -20,4 +20,4 @@ class PlexNode(QGraphicsWidget):
         return self.boundingRect
 
     def mousePressEvent(self, event):
-        App.select_thought(self.thought)
+        api.events.thoughtSelected.notify(self.thought)

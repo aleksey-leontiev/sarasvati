@@ -1,12 +1,12 @@
 from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QGraphicsScene, QGraphicsView
 
-from .plex_layout_action_executor import PlexLayoutActionExecutor
-from .plex import Plex
-from .plex_state_diff import PlexStateDiff
-from .plex_layout import PlexLayout
+from api import api
 
-from api.app import App
+from .plex import Plex
+from .plex_layout import PlexLayout
+from .plex_layout_action_executor import PlexLayoutActionExecutor
+from .plex_state_diff import PlexStateDiff
 
 
 class PlexController:
@@ -18,13 +18,14 @@ class PlexController:
         self.differ = PlexStateDiff()
         self.layout = PlexLayout()
 
-        App.thoughtSelected.subscribe(self.on_thought_selected)
+        api.events.thoughtSelected.subscribe(self.__on_thought_selected)
 
         self.__set_up_view_widget()
         self.actions_executor = PlexLayoutActionExecutor(self.scene)
 
-    def on_thought_selected(self, thought):
-        self.activate(thought)
+        r = api.brain.create_thought("root")
+        c1 = api.brain.create_linked_thought(r, "parent->child", "child")
+        api.events.thoughtSelected.notify(r)
 
     def activate(self, thought):
         new_state = self.plex.activate(thought)
@@ -38,3 +39,6 @@ class PlexController:
         self.view.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
         self.view.setSceneRect(0, 0, 25, 25)
         self.view.show()
+
+    def __on_thought_selected(self, thought):
+        self.activate(thought)
