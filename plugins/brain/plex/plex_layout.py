@@ -8,10 +8,10 @@ class PlexLayout:
         self.old_state = PlexState()
         self.state = PlexState()
         self.differ = PlexStateDiff()
-        self.offset = self.clear_offset()
+        self.offset = {}
 
     def change_to(self, new_state) -> []:
-        self.offset = self.clear_offset()
+        self.clear_offset()
         result = []
         diffs = self.differ.diff(self.old_state, new_state)
         for diff in diffs:
@@ -40,8 +40,8 @@ class PlexLayout:
     def get_linked(self, thought, kind):
         parents = thought.get_links_by_kind(kind)
         for parent in parents:
-            id = parent["id"]
-            state = self.old_state.get_state_by_thought_id(id)
+            tid = parent["id"]
+            state = self.old_state.get_state_by_thought_id(tid)
             if state is not None:
                 return state.thought
         return None
@@ -60,4 +60,4 @@ class PlexLayout:
             return [x, 100]
 
     def clear_offset(self):
-        return {"child_x":0}
+        self.offset = {"child_x": 0}

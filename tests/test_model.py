@@ -4,13 +4,14 @@ from unittest.mock import Mock, call
 from api.models import Model
 
 
+# noinspection PyMethodMayBeStatic
 class ModelMethods(unittest.TestCase):
     def test_init(self):
         m = Model()
         self.assertEqual(m.to_dictionary(), {})
 
     def test_init_with_dictionary(self):
-        dictionary = {"init":True}
+        dictionary = {"init": True}
         m = Model(dictionary)
         self.assertEqual(m.to_dictionary(), dictionary)
 

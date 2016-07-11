@@ -27,7 +27,7 @@ class PlexStateDiff:
             elif o.state != n.state:
                 result.append(PlexStateDiffLine(t, o.state, n.state))
 
-        result.sort(key=lambda t: t.thought.get_id()) # TODO: remove and put to the tests
+        result.sort(key=lambda tx: tx.thought.get_id())  # TODO: remove and put to the tests
         return result
 
     @staticmethod
@@ -39,15 +39,12 @@ class PlexStateDiff:
         for state in new.get_state():
             if state.thought.get_id() not in ids:
                 ids.append(state.thought.get_id())
-        # a = old.get_state()[:]
-        # a.extend(new.get_state())
-        # ids = list(set(map(lambda x: x.thought.get_id(), a)))
-        # print(ids)
         return ids
 
     @staticmethod
-    def get_thought_from_states(old, new, tid):
+    def get_thought_from_states(old, new, tid):  # TODO tid?
         if old is not None:
             return old.thought
         if new is not None:
             return new.thought
+        return None

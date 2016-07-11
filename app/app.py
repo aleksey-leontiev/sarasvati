@@ -26,7 +26,7 @@ class App:
         api.brain = self.brain
 
     def run(self):
-        qtapp = QApplication(sys.argv)
+        app = QApplication(sys.argv)
         widget = loadUi(os.path.join(self.path, 'main.ui'))
 
         for pluginInfo in self.pluginManager.getPluginsOfCategory("section"):
@@ -37,7 +37,7 @@ class App:
             widget.tabWidget.addTab(po.get_widget(), po.get_section_name())
 
         widget.show()
-        sys.exit(qtapp.exec_())
+        sys.exit(app.exec_())
 
     @staticmethod
     def __set_up_plugins_manager():

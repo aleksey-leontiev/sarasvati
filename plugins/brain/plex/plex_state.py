@@ -31,13 +31,13 @@ class PlexState:
         """
         return [e.thought for e in self.state if e.state == state]
 
-    def get_state_by_thought_id(self, id):
+    def get_state_by_thought_id(self, tid):
         # TODO: refactor using next()
         """
         Returns state by specified thought id
-        :param id: Thought id
+        :param tid: Thought id
         :return: PlexThoughtState
         """
         for ptp in self.state:
-            if ptp.thought.get_id() == id:
+            if ptp.thought.get_id() == tid:
                 return ptp
