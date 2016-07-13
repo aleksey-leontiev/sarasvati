@@ -88,8 +88,14 @@ class Brain:
         if kind == "parent->child":
             source.add_link(destination.get_id(), "child")
             destination.add_link(source.get_id(), "parent")
+        elif kind == "child->parent":
+            source.add_link(destination.get_id(), "parent")
+            destination.add_link(source.get_id(), "child")
         else:
             raise ValueError("Wrong link kind")
+
+    def find_thoughts(self, query):
+        return self.storage.find(query)
 
     @staticmethod
     def get_link_type(source: Thought, destination: Thought):

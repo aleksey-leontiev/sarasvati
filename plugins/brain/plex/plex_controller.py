@@ -18,19 +18,16 @@ class PlexController:
         self.plex = Plex(self.brain)
         self.differ = PlexStateDiff()
         self.layout = PlexLayout()
+        self.active_thought = None
 
         api.events.thoughtSelected.subscribe(self.__on_thought_selected)
+        brain.thoughtCreated.subscribe(self.__on_thought_created)
 
         self.__set_up_view_widget()
         self.actions_executor = PlexLayoutActionExecutor(self.scene)
 
-        r = api.brain.create_thought("root")
-        c1 = api.brain.create_linked_thought(r, "parent->child", "child")
-        c2 = api.brain.create_linked_thought(c1, "parent->child", "child2")
-        c3 = api.brain.create_linked_thought(r, "parent->child", "child1")
-        api.events.thoughtSelected.notify(r)
-
     def activate(self, thought):
+        self.active_thought = thought
         new_state = self.plex.activate(thought)
         actions = self.layout.change_to(new_state)
         self.actions_executor.run(actions)
@@ -45,3 +42,9 @@ class PlexController:
 
     def __on_thought_selected(self, thought):
         self.activate(thought)
+
+    def __on_thought_created(self, thought):
+        if self.active_thought:
+            self.activate(self.active_thought)
+        else:
+            self.activate(thought)

@@ -1,0 +1,8 @@
+[Core]
+Name = Brain Quick Actions
+Module = brain.toolbox.quick
+
+[Documentation]
+Author = Aleksey Leontiev
+Version = 0.1
+Description = Adds "Quick Actions" tab to brain's toolbox

@@ -13,3 +13,13 @@ class MemoryThoughtsStorage(ThoughtsStorage):
 
     def add_thought(self, thought):
         self.storage[thought.get_id()] = thought
+
+    def find(self, query):
+        result = []
+        for tid in self.storage:
+            thought = self.storage[tid]
+            if "title" in query:
+                if thought.get_title() == query["title"]:
+                    result.append(thought)
+        return result
+

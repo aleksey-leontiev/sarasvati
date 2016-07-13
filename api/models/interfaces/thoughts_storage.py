@@ -7,3 +7,6 @@ class ThoughtsStorage:
 
     def exist(self, tid):
         pass
+
+    def find(self, query):
+        pass

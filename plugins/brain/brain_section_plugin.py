@@ -17,6 +17,14 @@ class BrainSectionPlugin(SectionPlugin):
     def activate(self):
         path = os.path.join(self.path, 'section.ui')
         self.widget = loadUi(path)
+        self.widget.toolBox.removeItem(0)  # remove dummy page
+
+        plugins = api.pluginManager.getPluginsOfCategory("toolbox")
+        for plugin in plugins:
+            po = plugin.plugin_object
+            po.activate()
+            self.widget.toolBox.addItem(po.get_widget(), po.get_section_name())
+
         self.plex_controller = PlexController(api.brain, self.widget.graphicsView)
 
     def get_widget(self):
