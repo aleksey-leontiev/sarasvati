@@ -91,6 +91,9 @@ class Brain:
         elif kind == "child->parent":
             source.add_link(destination.get_id(), "parent")
             destination.add_link(source.get_id(), "child")
+        elif kind == "jump":
+            source.add_link(destination.get_id(), "jump")
+            destination.add_link(source.get_id(), "jump")
         else:
             raise ValueError("Wrong link kind")
 

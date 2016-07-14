@@ -7,6 +7,7 @@ class Controller:
 
         self.widget.createChildButton.clicked.connect(self.on_create_child_button_clicked)
         self.widget.createParentButton.clicked.connect(self.on_create_parent_button_clicked)
+        self.widget.createJumpButton.clicked.connect(self.on_create_jump_button_clicked)
 
         self.selected_thought = None
 
@@ -29,3 +30,6 @@ class Controller:
             thought = api.brain.create_linked_thought(self.selected_thought, "child->parent", "Parent Node")
             #api.events.thoughtCreated.notify(thought)
 
+    def on_create_jump_button_clicked(self):
+        if self.selected_thought is not None:
+            thought = api.brain.create_linked_thought(self.selected_thought, "jump", "Jump Node")
