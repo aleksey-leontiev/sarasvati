@@ -1,8 +1,11 @@
 class ThoughtsStorage:
-    def get_thought(self, tid):
+    def get(self, tid):
         pass
 
-    def add_thought(self, thought):
+    def add(self, thought):
+        pass
+
+    def update(self, thought):
         pass
 
     def exist(self, tid):

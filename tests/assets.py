@@ -8,8 +8,8 @@ class MemoryThoughtsStorage(ThoughtsStorage):
         else:
             self.storage = thoughts
 
-    def get_thought(self, tid):
+    def get(self, tid):
         return self.storage[tid]
 
-    def add_thought(self, thought):
+    def add(self, thought):
         self.storage[thought.get_id()] = thought

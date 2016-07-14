@@ -1,35 +1,54 @@
-from api.api import api
+from api import api
 
 
 class Controller:
     def __init__(self, widget):
         self.widget = widget
+        self.active_thought = None
 
-        self.widget.createChildButton.clicked.connect(self.on_create_child_button_clicked)
-        self.widget.createParentButton.clicked.connect(self.on_create_parent_button_clicked)
-        self.widget.createJumpButton.clicked.connect(self.on_create_jump_button_clicked)
+        # subscribe for widget's events
+        self.widget.createChildButton.clicked.connect(self.__on_create_child_button_clicked)
+        self.widget.createParentButton.clicked.connect(self.__on_create_parent_button_clicked)
+        self.widget.createJumpButton.clicked.connect(self.__on_create_jump_button_clicked)
+        self.widget.title.textChanged.connect(self.__on_title_text_changed)
+        self.widget.description.textChanged.connect(self.__on_description_text_changed)
 
-        self.selected_thought = None
+        # app's events
+        api.events.thoughtSelected.subscribe(self.__on_thought_selected)
+        api.events.thoughtChanged.subscribe(self.__on_thought_updated)
 
-        api.events.thoughtSelected.subscribe(self.on_thought_selected)
+    def __update_controls(self, thought):
+        self.widget.title.setText(thought.get_title())
+        self.widget.description.setText(thought.get_field("description"))
 
-    def on_thought_selected(self, thought):
-        self.selected_thought = thought
+    def __on_thought_selected(self, thought):
+        self.active_thought = thought
+        self.__update_controls(thought)
 
-    def on_create_child_button_clicked(self):
-        if self.selected_thought is None:
-            thought = api.brain.create_thought("New Node")
-            #api.events.thoughtCreated.notify(thought)
-            self.selected_thought = thought
+    def __on_thought_updated(self, thought):
+        if thought == self.active_thought: # TODO update controls if section tab is not active
+            pass
+
+    def __on_create_child_button_clicked(self):
+        if self.active_thought is None:
+            self.active_thought = api.actions.create_thought("New Node")
         else:
-            thought = api.brain.create_linked_thought(self.selected_thought, "parent->child", "Child Node")
-            #api.events.thoughtCreated.notify(thought)
+            api.actions.create_linked_thought(self.active_thought, "parent->child", "Child Node")
 
-    def on_create_parent_button_clicked(self):
-        if self.selected_thought is not None:
-            thought = api.brain.create_linked_thought(self.selected_thought, "child->parent", "Parent Node")
-            #api.events.thoughtCreated.notify(thought)
+    def __on_create_parent_button_clicked(self):
+        if self.active_thought is not None:
+            api.actions.create_linked_thought(self.active_thought, "child->parent", "Parent Node")
 
-    def on_create_jump_button_clicked(self):
-        if self.selected_thought is not None:
-            thought = api.brain.create_linked_thought(self.selected_thought, "jump", "Jump Node")
+    def __on_create_jump_button_clicked(self):
+        if self.active_thought is not None:
+            api.actions.create_linked_thought(self.active_thought, "jump", "Jump Node")
+
+    def __on_title_text_changed(self):
+        if self.active_thought:
+            self.active_thought.set_title(self.widget.title.toPlainText())
+            api.actions.update_thought(self.active_thought)
+
+    def __on_description_text_changed(self):
+        if self.active_thought:
+            self.active_thought.set_field("description", self.widget.title.toPlainText())
+            api.actions.update_thought(self.active_thought)

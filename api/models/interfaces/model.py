@@ -14,7 +14,7 @@ class Model:
         :param name: Name of the field
         :return: Value of the field
         """
-        return self.dictionary[name]
+        return self.dictionary.get(name, None)
 
     def set_field(self, name, value):
         """

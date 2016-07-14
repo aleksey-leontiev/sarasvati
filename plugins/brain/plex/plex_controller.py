@@ -21,7 +21,8 @@ class PlexController:
         self.active_thought = None
 
         api.events.thoughtSelected.subscribe(self.__on_thought_selected)
-        brain.thoughtCreated.subscribe(self.__on_thought_created)
+        api.events.thoughtCreated.subscribe(self.__on_thought_created)
+        api.events.thoughtChanged.subscribe(self.__on_thought_changed)
 
         self.__set_up_view_widget()
         self.actions_executor = PlexLayoutActionExecutor(self.scene)
@@ -48,3 +49,8 @@ class PlexController:
             self.activate(self.active_thought)
         else:
             self.activate(thought)
+
+    def __on_thought_changed(self, thought):
+        node = self.scene.get_node(thought)
+        if node:
+            node.update()

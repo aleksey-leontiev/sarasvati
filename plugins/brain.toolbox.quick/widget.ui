@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -26,39 +26,46 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="3" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+   <item>
+    <widget class="QTextEdit" name="title">
+     <property name="maximumSize">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>16777215</width>
+       <height>64</height>
       </size>
      </property>
-    </spacer>
-   </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="createJumpButton">
-     <property name="text">
-      <string>Create Jump</string>
-     </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QPushButton" name="createChildButton">
-     <property name="text">
-      <string>Create Child</string>
-     </property>
-    </widget>
+   <item>
+    <widget class="QTextEdit" name="description"/>
    </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="createParentButton">
-     <property name="text">
-      <string>Create Parent</string>
-     </property>
-    </widget>
+   <item>
+    <layout class="QHBoxLayout" name="buttonsLayout">
+     <item>
+      <widget class="QPushButton" name="createChildButton">
+       <property name="text">
+        <string>Child</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="createParentButton">
+       <property name="text">
+        <string>Parent</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="createJumpButton">
+       <property name="text">
+        <string>Jump</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

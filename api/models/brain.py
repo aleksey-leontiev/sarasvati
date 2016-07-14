@@ -1,4 +1,3 @@
-from ..event import Event
 from .interfaces import ThoughtsStorage
 from .thought import Thought
 from .link import Link
@@ -14,7 +13,6 @@ class Brain:
         :param storage: Place to store thoughts in
         """
         self.storage = storage
-        self.thoughtCreated = Event()
 
     def get_thought(self, tid) -> Thought:
         """
@@ -23,7 +21,7 @@ class Brain:
         :param tid: Id of the thought
         :return: Thought
         """
-        return self.storage.get_thought(tid)
+        return self.storage.get(tid)
 
     def get_links(self, thought: Thought):
         """
@@ -46,7 +44,7 @@ class Brain:
         :param thought: Thought to be added
         """
         if not self.storage.exist(thought.get_id()):
-            self.storage.add_thought(thought)
+            self.storage.add(thought)
 
     def create_thought(self, title) -> Thought:
         """
@@ -57,8 +55,7 @@ class Brain:
         """
         new_thought = Thought()
         new_thought.set_title(title)
-        self.storage.add_thought(new_thought)
-        self.thoughtCreated.notify(new_thought)
+        self.storage.add(new_thought)
         return new_thought
 
     def create_linked_thought(self, root: Thought, kind, title) -> Thought:
@@ -73,9 +70,14 @@ class Brain:
         new_thought = Thought()
         new_thought.set_title(title)
         self.link_thoughts(root, new_thought, kind)
-        self.storage.add_thought(new_thought)
-        self.thoughtCreated.notify(new_thought)
+        self.storage.add(new_thought)
         return new_thought
+
+    def update_thought(self, thought):
+        self.storage.update(thought)
+
+    def find_thoughts(self, query):
+        return self.storage.find(query)
 
     @staticmethod
     def link_thoughts(source: Thought, destination: Thought, kind):
@@ -96,9 +98,6 @@ class Brain:
             destination.add_link(source.get_id(), "jump")
         else:
             raise ValueError("Wrong link kind")
-
-    def find_thoughts(self, query):
-        return self.storage.find(query)
 
     @staticmethod
     def get_link_type(source: Thought, destination: Thought):
