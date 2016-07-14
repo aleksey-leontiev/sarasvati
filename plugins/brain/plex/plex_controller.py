@@ -27,6 +27,10 @@ class PlexController:
         self.__set_up_view_widget()
         self.actions_executor = PlexLayoutActionExecutor(self.scene)
 
+        root_thought = self.brain.get_root_thought()
+        #self.activate(root_thought)
+        api.events.thoughtSelected.notify(root_thought)
+
     def activate(self, thought):
         self.active_thought = thought
         new_state = self.plex.activate(thought)

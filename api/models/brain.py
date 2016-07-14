@@ -14,6 +14,19 @@ class Brain:
         """
         self.storage = storage
 
+        # init root thought
+        self.root = storage.get_root()
+        if self.root is None:
+            self.root = self.create_thought("Root")
+            self.root.set_field("root", True)
+
+    def get_root_thought(self) -> Thought:
+        """
+        Returns root thought
+        :return: Thought
+        """
+        return self.root
+
     def get_thought(self, tid) -> Thought:
         """
         Returns thought by specified id. None if does not exist.
@@ -71,6 +84,7 @@ class Brain:
         new_thought.set_title(title)
         self.link_thoughts(root, new_thought, kind)
         self.storage.add(new_thought)
+        self.storage.update(root)
         return new_thought
 
     def update_thought(self, thought):

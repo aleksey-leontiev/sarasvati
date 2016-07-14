@@ -1,2 +1,4 @@
 .idea
 *.pyc
+database.json
+test_database.json

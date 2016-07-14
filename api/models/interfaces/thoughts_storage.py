@@ -1,4 +1,7 @@
 class ThoughtsStorage:
+    def get_root(self):
+        pass
+
     def get(self, tid):
         pass
 

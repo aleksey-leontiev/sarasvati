@@ -7,6 +7,7 @@ from yapsy.PluginManager import PluginManager
 from api.sarasvati_api import api
 from api.models import Brain
 from api.plugins import SectionPlugin, ToolboxPlugin
+from app.file_storage import FileThoughtsStorage
 from app.memory_storage import MemoryThoughtsStorage
 
 
@@ -14,7 +15,7 @@ class App:
     def __init__(self):
         self.path = os.path.dirname(os.path.abspath(__file__))
         self.pluginManager = self.__set_up_plugins_manager()
-        self.storage = MemoryThoughtsStorage()
+        self.storage = FileThoughtsStorage()
         self.brain = Brain(self.storage)
 
         api.brain = self.brain

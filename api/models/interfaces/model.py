@@ -2,10 +2,8 @@ from api.event import Event
 
 
 class Model:
-    def __init__(self, dictionary=None):
-        if dictionary is None:
-            dictionary = {}
-        self.dictionary = dictionary
+    def __init__(self):
+        self.dictionary = {}
         self.changed = Event()
 
     def get_field(self, name):
@@ -36,4 +34,7 @@ class Model:
         """
         return self.dictionary
 
+    def from_dictionary(self, dictionary):
+        self.dictionary = {}
+        self.dictionary.update(dictionary)
 

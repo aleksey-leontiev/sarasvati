@@ -14,11 +14,11 @@ class PlexLayoutPlacement:
             thoughts = plex_state.get_thoughts_by_state(state)
             for thought in thoughts:
                 pos = self.__get_pos(state)
-                self.result[thought] = pos
+                self.result[thought.get_id()] = pos
         return self.result
 
     def get_pos(self, thought: Thought):
-        return self.result[thought]
+        return self.result[thought.get_id()]
 
     def __get_pos(self, state):
         if state == "root":
