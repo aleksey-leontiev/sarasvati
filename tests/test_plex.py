@@ -3,12 +3,12 @@ import unittest
 from api.models import Brain
 from plugins.brain.plex import Plex
 # noinspection PyUnresolvedReferences
-from assets import MemoryThoughtsStorage
+from assets import MemoryStorage
 
 
 class PlexMethods(unittest.TestCase):
     def setUp(self):
-        self.storage = MemoryThoughtsStorage()
+        self.storage = MemoryStorage()
         self.brain = Brain(self.storage)
         self.plex = Plex(self.brain)
 

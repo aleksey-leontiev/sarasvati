@@ -2,14 +2,14 @@ import unittest
 
 from api.models import Brain
 # noinspection PyUnresolvedReferences
-from assets import MemoryThoughtsStorage
+from assets import MemoryStorage
 
 from plugins.brain.plex import PlexLayout, Plex, PlexLayoutAction
 
 
 class PlexLayoutMethods(unittest.TestCase):
     def setUp(self):
-        self.storage = MemoryThoughtsStorage()
+        self.storage = MemoryStorage()
         self.brain = Brain(self.storage)
         self.plex = Plex(self.brain)
         self.layout = PlexLayout()

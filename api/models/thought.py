@@ -9,9 +9,9 @@ class Thought(Model):
         Initializes new instance of the Thought class
         """
         super().__init__()
-        id = uuid.uuid4()
+        tid = uuid.uuid4()
         self.set_title("")
-        self.set_field("id", id.hex)
+        self.set_field("id", tid.hex)
         self.set_field("links", [])
 
     def get_id(self):

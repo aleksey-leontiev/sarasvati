@@ -2,12 +2,12 @@ import unittest
 
 from api.models import Thought, Brain, Link
 # noinspection PyUnresolvedReferences
-from assets import MemoryThoughtsStorage
+from assets import MemoryStorage
 
 
 class ThoughtMethods(unittest.TestCase):
     def setUp(self):
-        self.storage = MemoryThoughtsStorage()
+        self.storage = MemoryStorage()
         self.brain = Brain(self.storage)
 
     def test_add_thought(self):

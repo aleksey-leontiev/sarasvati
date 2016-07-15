@@ -32,7 +32,7 @@ class Model:
         Returns dictionary representation of the model
         :return: dict
         """
-        return self.dictionary
+        return self.dictionary.copy()
 
     def from_dictionary(self, dictionary):
         self.dictionary = {}
