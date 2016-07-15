@@ -5,7 +5,7 @@ from api.models import Thought, Brain, Link
 from assets import MemoryStorage
 
 
-class ThoughtMethods(unittest.TestCase):
+class TestApiBrain(unittest.TestCase):
     def setUp(self):
         self.storage = MemoryStorage()
         self.brain = Brain(self.storage)

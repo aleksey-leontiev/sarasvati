@@ -4,7 +4,7 @@ from unittest.mock import Mock, call
 from api.models import Model
 
 
-class ModelMethods(unittest.TestCase):
+class TestApiModel(unittest.TestCase):
     def setUp(self):
         self.model = Model()
 

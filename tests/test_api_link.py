@@ -3,7 +3,7 @@ import unittest
 from api.models import Thought, Link
 
 
-class ThoughtMethods(unittest.TestCase):
+class TestApiLink(unittest.TestCase):
     def setUp(self):
         self.root = Thought()
         self.child1 = Thought()

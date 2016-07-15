@@ -3,7 +3,7 @@ import unittest
 from api.models import Thought
 
 
-class ThoughtMethods(unittest.TestCase):
+class TestApiThought(unittest.TestCase):
     def setUp(self):
         self.root = Thought()
         self.child1 = Thought()
