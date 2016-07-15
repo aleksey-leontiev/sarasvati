@@ -13,19 +13,14 @@ class Brain:
         :param storage: Place to store thoughts in
         """
         self.storage = storage
-
-        # init root thought
-        self.root = storage.get_root()
-        if self.root is None:
-            self.root = self.create_thought("Root")
-            self.root.set_field("root", True)
+        self.__root = self.__init_root()
 
     def get_root_thought(self) -> Thought:
         """
         Returns root thought
         :return: Thought
         """
-        return self.root
+        return self.__root
 
     def get_thought(self, tid) -> Thought:
         """
@@ -58,6 +53,8 @@ class Brain:
         """
         if not self.storage.exist(thought.get_id()):
             self.storage.add(thought)
+        else:
+            raise ValueError("Thought already exist")
 
     def create_thought(self, title) -> Thought:
         """
@@ -88,9 +85,18 @@ class Brain:
         return new_thought
 
     def update_thought(self, thought):
+        """
+        Updates thought
+        :param thought: Thought to update
+        """
         self.storage.update(thought)
 
     def find_thoughts(self, query):
+        """
+        Find thoughts
+        :param query: Query
+        :return: Array of thoughts
+        """
         return self.storage.find(query)
 
     @staticmethod
@@ -135,3 +141,14 @@ class Brain:
         :return: True if thoughts connected, otherwise False
         """
         return Brain.get_link_type(source, destination) is not None
+
+    def __init_root(self) -> Thought:
+        """
+        Initializes root thought
+        :return: Thought
+        """
+        t = self.storage.get_root()
+        if t is None:
+            t = self.create_thought("Root")
+            t.set_field("root", True)
+        return t

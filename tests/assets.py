@@ -13,3 +13,19 @@ class MemoryStorage(Storage):
 
     def add(self, thought):
         self.storage[thought.get_id()] = thought
+
+    def update(self, thought):
+        pass
+
+    def exist(self, tid):
+        return tid in self.storage
+
+    def find(self, query):
+        result = []
+        for tid in self.storage:
+            thought = self.storage[tid]
+            if "title" in query:
+                if thought.get_title() == query["title"]:
+                    result.append(thought)
+        return result
+

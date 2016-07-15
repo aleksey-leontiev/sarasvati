@@ -17,6 +17,9 @@ class MemoryStorage(Storage):
     def update(self, thought):
         pass
 
+    def exist(self, tid):
+        return tid in self.storage
+
     def find(self, query):
         result = []
         for tid in self.storage:

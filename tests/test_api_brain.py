@@ -10,14 +10,27 @@ class TestApiBrain(unittest.TestCase):
         self.storage = MemoryStorage()
         self.brain = Brain(self.storage)
 
+    def test_root_thought(self):
+        self.assertIsNotNone(self.brain.get_root_thought())
+
     def test_add_thought(self):
-        t = Thought()
-        self.brain.add_thought(t)
-        self.assertIsNotNone(self.brain.get_thought(t.get_id()))
+        t1 = Thought()
+        self.brain.add_thought(t1)
+
+        t2 = self.brain.get_thought(t1.get_id())
+        self.assertIsNotNone(t2)
+        self.assertEqual(t1, t2)
+
+    def test_add_thought_twice(self):
+        t1 = Thought()
+        self.brain.add_thought(t1)
+        with self.assertRaises(ValueError):
+            self.brain.add_thought(t1)
 
     def test_create_thought(self):
         c = self.brain.create_thought("test")
         t = self.brain.get_thought(c.get_id())
+        self.assertIsNotNone(c)
         self.assertEqual(c, t)
 
     def test_create_linked_thought(self):
