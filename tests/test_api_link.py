@@ -20,6 +20,10 @@ class TestApiLink(unittest.TestCase):
         l2 = Link(self.root, self.child1, "child")
         self.assertEqual(l1, l2)
 
+    def test_eq_none(self):
+        l1 = Link(self.root, self.child1, "child")
+        self.assertNotEqual(l1, None)
+
     def test_not_eq(self):
         l1 = Link(self.root, self.child1, "child")
         l2 = Link(self.root, self.child2, "child")
