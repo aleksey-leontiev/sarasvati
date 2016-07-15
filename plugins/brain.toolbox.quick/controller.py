@@ -15,7 +15,6 @@ class Controller:
 
         # app's events
         api.events.thoughtSelected.subscribe(self.__on_thought_selected)
-        api.events.thoughtChanged.subscribe(self.__on_thought_updated)
 
     def __update_controls(self, thought):
         self.widget.title.setText(thought.get_title())
@@ -24,10 +23,6 @@ class Controller:
     def __on_thought_selected(self, thought):
         self.active_thought = thought
         self.__update_controls(thought)
-
-    def __on_thought_updated(self, thought):
-        if thought == self.active_thought: # TODO update controls if section tab is not active
-            pass
 
     def __on_create_child_button_clicked(self):
         if self.active_thought is None:
