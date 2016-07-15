@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from api import Event
 
 
-class EventMethods(unittest.TestCase):
+class TestApiEvent(unittest.TestCase):
     def setUp(self):
         self.event = Event()
 
@@ -20,3 +20,14 @@ class EventMethods(unittest.TestCase):
         self.event.unsubscribe(f)
         self.event.notify("data")
         f.assert_not_called()
+
+    def test_unsubscribe_not_subscribed(self):
+        f = Mock()
+        with self.assertRaises(ValueError):
+            self.event.unsubscribe(f)
+
+    def test_subscribe_twice(self):
+        f = Mock()
+        self.event.subscribe(f)
+        with self.assertRaises(ValueError):
+            self.event.subscribe(f)

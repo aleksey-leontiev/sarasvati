@@ -11,14 +11,20 @@ class Event:
         Subscribe for the event
         :param handler:
         """
-        self.handlers.append(handler)
+        if handler not in self.handlers:
+            self.handlers.append(handler)
+        else:
+            raise ValueError("Already subscribed on specified handler")
 
     def unsubscribe(self, handler):
         """
         Unsubscribe from the event
         :param handler:
         """
-        self.handlers.remove(handler)
+        if handler in self.handlers:
+            self.handlers.remove(handler)
+        else:
+            raise ValueError("Not subscribed on specified handler")
 
     def notify(self, args):
         """
