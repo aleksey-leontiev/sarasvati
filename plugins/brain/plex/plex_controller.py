@@ -58,3 +58,5 @@ class PlexController:
         node = self.scene.get_node(thought)
         if node:
             node.update()
+        if self.active_thought == thought:
+            self.activate(self.active_thought)

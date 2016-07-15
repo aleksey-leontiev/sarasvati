@@ -52,5 +52,8 @@ class TestApiThought(unittest.TestCase):
         self.assertEqual(self.root, self.root)
         self.assertEqual(self.root, self.child1)
 
+    def test_eq_none(self):
+        self.assertNotEqual(self.root, None)
+
     def test_not_eq(self):
         self.assertNotEqual(self.root, self.child1)

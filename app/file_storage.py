@@ -36,7 +36,15 @@ class FileStorage(Storage):
         self.db.update(self.__update_operation(thought.to_dictionary()), q.id == thought.get_id())
 
     def find(self, query):
-        raise Exception("Not implemented")
+        result = []
+        q = Query()
+        if "title" in query:
+            sr = self.db.search(q.title == query["title"])
+            for r in sr:
+                t = Thought()
+                t.from_dictionary(r)
+                result.append(t)
+        return result
 
     @staticmethod
     def __update_operation(thought):
