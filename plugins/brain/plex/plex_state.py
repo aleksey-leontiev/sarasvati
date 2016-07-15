@@ -21,7 +21,7 @@ class PlexState:
         Returns state
         :return: Array of PlexThoughtState
         """
-        return self.state
+        return self.state.copy()
 
     def get_thoughts_by_state(self, state):
         """
