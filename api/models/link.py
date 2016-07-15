@@ -17,6 +17,8 @@ class Link:
         self.kind = kind
 
     def __eq__(self, other):
+        if other is None:
+            return False
         return \
             self.source == other.source and \
             self.destination == other.destination and \
