@@ -20,6 +20,7 @@ class BrainSectionPlugin(SectionPlugin):
         self.widget.toolBox.removeItem(0)  # remove dummy page
 
         plugins = api.pluginManager.getPluginsOfCategory("toolbox")
+        plugins.sort(key=lambda x: x.plugin_object.get_order())
         for plugin in plugins:
             po = plugin.plugin_object
             po.activate()

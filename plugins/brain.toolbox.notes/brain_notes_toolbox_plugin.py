@@ -6,7 +6,7 @@ from api.plugins import ToolboxPlugin
 from .controller import Controller
 
 
-class BrainQuickToolboxPlugin(ToolboxPlugin):
+class BrainNotesToolboxPlugin(ToolboxPlugin):
     def __init__(self):
         super().__init__()
         self.controller = None
@@ -23,7 +23,4 @@ class BrainQuickToolboxPlugin(ToolboxPlugin):
         return self.widget
 
     def get_section_name(self):
-        return 'Actions'
-
-    def get_order(self):
-        return -999  # 'Actions' tab should be first
+        return 'Notes'
