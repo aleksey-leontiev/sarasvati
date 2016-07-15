@@ -9,6 +9,10 @@ class TestApiThought(unittest.TestCase):
         self.child1 = Thought()
         self.child2 = Thought()
 
+    def test_init_title(self):
+        t = Thought("title")
+        self.assertEqual(t.get_title(), "title")
+
     def test_init_id_generated(self):
         self.assertIsNotNone(self.root.get_id())
 

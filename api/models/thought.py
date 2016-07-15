@@ -4,13 +4,13 @@ from .interfaces import Model
 
 
 class Thought(Model):
-    def __init__(self):
+    def __init__(self, title=""):
         """
         Initializes new instance of the Thought class
         """
         super().__init__()
         tid = uuid.uuid4()
-        self.set_title("")
+        self.set_title(title)
         self.set_field("id", tid.hex)
         self.set_field("links", [])
 

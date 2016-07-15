@@ -8,7 +8,6 @@ from api.sarasvati_api import api
 from api.models import Brain
 from api.plugins import SectionPlugin, ToolboxPlugin
 from app.file_storage import FileStorage
-from app.memory_storage import MemoryStorage
 
 
 class App:
