@@ -24,7 +24,13 @@ class PlexNode(QGraphicsWidget):
         painter.setBrush(QBrush(QColor(127, 255, 127)))
         painter.drawRoundedRect(background_rect, 10, 10)
 
-        self.boundingRect = painter.drawText(self.maxBounding, Qt.TextWordWrap, self.thought.get_title())
+        tbr = painter.drawText(self.maxBounding, Qt.TextWordWrap, self.thought.get_title())
+
+        painter.setPen(QPen(QColor(0, 0, 0, 127)))
+        dbr = painter.drawText(self.maxBounding.translated(0, tbr.height()),
+                               Qt.TextWordWrap, self.thought.get_field("description"))
+
+        self.boundingRect = tbr.united(dbr)
         self.resize(self.boundingRect.width(), self.boundingRect.height())
 
     def boundingRect(self):

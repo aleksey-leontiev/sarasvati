@@ -50,5 +50,5 @@ class Controller:
 
     def __on_description_text_changed(self):
         if self.active_thought:
-            self.active_thought.set_field("description", self.widget.title.toPlainText())
+            self.active_thought.set_field("description", self.widget.description.toPlainText())
             api.actions.update_thought(self.active_thought)
