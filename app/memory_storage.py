@@ -1,7 +1,7 @@
-from api.models import ThoughtsStorage
+from api.models import Storage
 
 
-class MemoryThoughtsStorage(ThoughtsStorage):
+class MemoryStorage(Storage):
     def __init__(self, thoughts=None):
         if thoughts is None:
             self.storage = {}

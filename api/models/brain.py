@@ -1,4 +1,4 @@
-from .interfaces import ThoughtsStorage
+from .interfaces import Storage
 from .thought import Thought
 from .link import Link
 
@@ -7,7 +7,7 @@ class Brain:
     """
     Brain
     """
-    def __init__(self, storage: ThoughtsStorage):
+    def __init__(self, storage: Storage):
         """
         Initializes new instance of the Brain
         :param storage: Place to store thoughts in

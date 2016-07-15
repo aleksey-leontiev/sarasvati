@@ -1,8 +1,8 @@
-from api.models import ThoughtsStorage, Thought
+from api.models import Storage, Thought
 from tinydb import TinyDB, Query
 
 
-class FileThoughtsStorage(ThoughtsStorage):
+class FileStorage(Storage):
     def __init__(self, thoughts=None):
         self.db = TinyDB('database.json')
         if thoughts is not None:

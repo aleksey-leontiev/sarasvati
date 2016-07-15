@@ -1,4 +1,4 @@
-class ThoughtsStorage:
+class Storage:
     def get_root(self):
         pass
 

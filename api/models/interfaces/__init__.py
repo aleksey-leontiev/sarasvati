@@ -1,2 +1,2 @@
 from .model import Model
-from .thoughts_storage import ThoughtsStorage
+from .storage import Storage
