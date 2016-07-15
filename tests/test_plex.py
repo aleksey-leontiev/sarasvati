@@ -68,6 +68,14 @@ class TestPlex(unittest.TestCase):
         self.assertEqual(layout1.get_thoughts_by_state("jump"), [])
         self.assertEqual(len(layout1.get_state()), 2)
 
+    def test_activate_root_jump2_parent(self):
+        layout1 = self.plex.activate(self.root_jump2_parent)
+        self.assertEqual(layout1.get_thoughts_by_state("parent"), [])
+        self.assertEqual(layout1.get_thoughts_by_state("root"), [self.root_jump2_parent])
+        self.assertEqual(layout1.get_thoughts_by_state("child"), [self.root_jump2])
+        self.assertEqual(layout1.get_thoughts_by_state("jump"), [])
+        self.assertEqual(len(layout1.get_state()), 2)
+
     def __init_brain_state_1(self):
         # root -> child1 -> child3
         # root -> child2
@@ -86,3 +94,5 @@ class TestPlex(unittest.TestCase):
         self.child3_jump1 = self.brain.create_linked_thought(self.child3, "jump", "child3_jump1")
 
         self.child4 = self.brain.create_linked_thought(self.child3_jump1, "parent->child", "child3_jump1_child1")
+
+        self.root_jump2_parent = self.brain.create_linked_thought(self.root_jump2, "child->parent", "root_jump2_parent")
