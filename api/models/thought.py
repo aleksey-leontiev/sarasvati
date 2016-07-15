@@ -71,6 +71,8 @@ class Thought(Model):
                 self.dictionary["links"].remove(link)
 
     def __eq__(self, other):
+        if other is None:
+            return False
         return self.get_id() == other.get_id()
 
     def __repr__(self):
