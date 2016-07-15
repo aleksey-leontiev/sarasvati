@@ -24,3 +24,6 @@ class BrainQuickToolboxPlugin(ToolboxPlugin):
 
     def get_section_name(self):
         return 'Actions'
+
+    def get_order(self):
+        return -999  # 'Actions' tab should be first

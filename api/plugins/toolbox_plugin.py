@@ -7,3 +7,6 @@ class ToolboxPlugin(IPlugin):
 
     def get_section_name(self):
         pass
+
+    def get_order(self):
+        return 0
